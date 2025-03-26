@@ -62,53 +62,6 @@ MAZE = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ]
 
-# Convert the text pattern to a maze
-def create_bonus_maze_from_pattern():
-    pattern = [
-        "XXX_XXX__X_XXX_XXX_XXX",
-        "X___X____X_X_X_X___X_X",
-        "X___XXX__X_X_X_XXX_X_X",
-        "X_____X__X_X_X_X_X_X_X",
-        "XXX_XXX__X_XXX_XXX_XXX"
-    ]
-    
-    # Create base maze with borders
-    maze = []
-    maze.append([1] * 19)  # Top border
-    
-    # Add dots row
-    dots_row = [1] + [2] * 17 + [1]
-    maze.append(dots_row[:])
-    
-    # Convert pattern to maze walls
-    for row in pattern:
-        maze_row = [1]  # Left border
-        for char in row:
-            if char == 'X':
-                maze_row.append(1)  # Wall
-            else:  # '_'
-                maze_row.append(0)  # Empty space
-        maze_row.append(1)  # Right border
-        maze.append(maze_row)
-    
-    # Add dots row after pattern
-    maze.append(dots_row[:])
-    
-    # Add tunnel row
-    tunnel_row = [1] * 7 + [4] * 5 + [1] * 7
-    maze.append(tunnel_row)
-    
-    # Add remaining rows with dots
-    for _ in range(9):
-        maze.append(dots_row[:])
-    
-    # Add bottom border
-    maze.append([1] * 19)
-    
-    return maze
-
-BONUS_MAZE = create_bonus_maze_from_pattern()
-
 def find_path(maze: List[List[int]], start: Tuple[int, int], target: Tuple[int, int]) -> List[Tuple[int, int]]:
     """Find path using BFS algorithm."""
     queue = deque([(start, [start])])
